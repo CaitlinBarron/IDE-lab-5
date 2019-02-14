@@ -1,0 +1,96 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.24.2.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Rick Tolleson Rochester Institute of Technology Flex license: MDK-ARM Professional: 100 user(s) (mdk_pro) Operation stops: 22 Jul 2019
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional: 100 user(s)  Version: 5.24.1
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 5 (build 528)
+Assembler:       Armasm.exe V5.06 update 5 (build 528)
+Linker/Locator:  ArmLink.exe V5.06 update 5 (build 528)
+Library Manager: ArmAr.exe V5.06 update 5 (build 528)
+Hex Converter:   FromElf.exe V5.06 update 5 (build 528)
+CPU DLL:         SARMCM3.DLL V5.24.1
+Dialog DLL:      DCM.DLL V1.16.0.0
+Target DLL:      UL2CM3.DLL V1.160.3.0
+Dialog DLL:      TCM.DLL V1.32.0.0
+ 
+<h2>Project:</h2>
+D:\IDE\Lab 5\part 1\part1.uvprojx
+Project File Date:  02/13/2019
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+compiling uart.c...
+MK64F12.h(13709): warning:  #1-D: last line of file ends without a newline
+   
+uart.c: 1 warning, 0 errors
+compiling camera_FTM_blank.c...
+MK64F12.h(13709): warning:  #1-D: last line of file ends without a newline
+   
+camera_FTM_blank.c: 1 warning, 0 errors
+compiling main.c...
+MK64F12.h(13709): warning:  #1-D: last line of file ends without a newline
+   
+main.c: 1 warning, 0 errors
+assembling startup_MK64F12.s...
+compiling main_A2D_template.c...
+MK64F12.h(13709): warning:  #1-D: last line of file ends without a newline
+   
+main_A2D_template.c(28): warning:  #174-D: expression has no effect
+  	
+TM_SC_CLKS(0x01);
+main_A2D_template.c(100): warning:  #174-D: expression has no effect
+      
+AC_DATL_DATA0(i);
+main_A2D_template.c(101): warning:  #174-D: expression has no effect
+  		
+AC_DATH_DATA1(i);
+main_A2D_template.c(132): warning:  #111-D: statement is unreachable
+      return 0;
+main_A2D_template.c: 5 warnings, 0 errors
+compiling isr.c...
+MK64F12.h(13709): warning:  #1-D: last line of file ends without a newline
+   
+isr.c: 1 warning, 0 errors
+compiling system_MK64F12.c...
+linking...
+Program Size: Code=2218 RO-data=1098 RW-data=28 ZI-data=1476  
+".\Objects\part1.axf" - 0 Error(s), 9 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.0.1.pack
+                ARM.CMSIS.5.0.1
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.0.1
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.Kinetis_K60_DFP.1.5.0.pack
+                Keil.Kinetis_K60_DFP.1.5.0
+                NXP Kinetis K60 Series Device Support and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_Target_1
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: Keil::Device:Startup:1.0.0
+      Source file:   Device\Source\ARM\startup_MK64F12.s
+      Source file:   Device\Source\system_MK64F12.c
+
+   * Component: ARM::CMSIS:CORE:5.0.1
+Build Time Elapsed:  00:00:05
+</pre>
+</body>
+</html>
