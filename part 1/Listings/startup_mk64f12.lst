@@ -1077,10 +1077,11 @@ ARM Macro Assembler    Page 17
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\startup_mk64f12.d -o.\objects\startup_mk64f12.o -I.\R
-TE\_Target_1 -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include -IC:\Keil_v5\A
-RM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include --predefine="__UVISION_VERSIO
-N SETA 524" --predefine="_RTE_ SETA 1" --predefine="MK64FX512xxx12 SETA 1" --li
-st=.\listings\startup_mk64f12.lst RTE\Device\MK64FX512xxx12\startup_MK64F12.s
+TE\_Target_1 -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil
+_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include --predefine="__UVISION_V
+ERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine="MK64FX512xxx12 SETA 1"
+ --list=.\listings\startup_mk64f12.lst RTE\Device\MK64FX512xxx12\startup_MK64F1
+2.s
 
 
 

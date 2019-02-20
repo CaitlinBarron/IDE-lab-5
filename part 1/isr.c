@@ -10,7 +10,8 @@
 //variables global to the IRQ handlers which dictates if timer is enabled &  timer counter
 int timerCount = 0;
 int SW2_Pressed = 0;
-
+int SW3_Pressed = 0;
+int redON = 0;
 
 void Blue_LED()
 {
@@ -37,18 +38,31 @@ void PDB0_IRQHandler(void)
 { //For PDB timer
 	
 	//Clear interupt in PDB0_SC
-	PDB0_SC &= ~PDB_SC_PDBIE_MASK;
-	//Enable LED
-	Red_LED();
+	PDB0_SC &= ~PDB_SC_PDBIF_MASK;
+
+	
+	if(SW3_Pressed){
+		if(redON){
+			Off_LED();
+			redON = 0;
+		}
+		else{
+			Off_LED();
+			Red_LED();
+			redON = 1;
+		}
+	}
+	
 	return;
 }
 	
 void FTM0_IRQHandler(void)
 { //For FTM timer
+	FTM0_CNT = 0;
 	FTM0_SC &= ~FTM_SC_TOF_MASK;
 	
 	
-	if(GPIOC_PDIR & ( 1 << 6)){
+	if(SW2_Pressed){
 		timerCount++;
 	}
 	
@@ -57,13 +71,14 @@ void FTM0_IRQHandler(void)
 	
 void PORTA_IRQHandler(void)
 { //For switch 3
-	PORTA_ISFR = PORT_ISFR_ISF(0x10);		//clear flag
+	PORTA_PCR4 |= PORT_PCR_ISF_MASK;		//clear flag
 
-	if(FTM0_MODE & FTM_MODE_FTMEN_MASK){
-		FTM0_MODE &= ~FTM_MODE_FTMEN_MASK;
+	if(SW3_Pressed){
+		SW3_Pressed = 0;
+		Off_LED();
 	}
 	else{
-		FTM0_MODE |= FTM_MODE_FTMEN_MASK;
+		SW3_Pressed = 1;
 
 	}
 	
@@ -72,9 +87,9 @@ void PORTA_IRQHandler(void)
 	
 void PORTC_IRQHandler(void)
 { //For switch 2
-	PORTC_ISFR = PORT_ISFR_ISF(0x40);		//clear flag
+	PORTC_PCR6 |= PORT_PCR_ISF_MASK;		//clear flag
 	
-	if(GPIOC_PDIR & ( 1 << 6)){
+	if(!(GPIOC_PDIR & ( 1 << 6))){
 		SW2_Pressed = 1;
 		FTM0_CNT = 0x00;
 		timerCount = 0;
@@ -83,7 +98,9 @@ void PORTC_IRQHandler(void)
 	else{
 		SW2_Pressed = 0;
 		Off_LED();
-		put("Button held for xx ms");
+		put("Button held for ");
+		putnumU(timerCount);
+		put(" ms\n\r");
 	}
 
 	

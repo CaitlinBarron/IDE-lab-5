@@ -9,5 +9,6 @@ void uart_putchar ( char ch );
 void LED_init(void);
 void SW3_INIT(void);
 void SW2_INIT(void);
+void PDB_INIT(void);
 
 # endif /* ifndef UART_H */

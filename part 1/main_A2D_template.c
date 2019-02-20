@@ -28,27 +28,24 @@ void FTM_INIT(void){
 	FTM_SC_CLKS(0x01);
 	
 	//Enable the FTM0 IRQ, use NVIC_EnableIRQ macro
-	NVIC_EnableIRQ(FTM0_IRQn);
 }
 
 void SW3_INIT(){
 	//Configure SW3 to be interrupted on the rising edge
 	SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;		//Enables Port A clock
 	PORTA_PCR4 = PORT_PCR_MUX(1);				//PTA4
-	GPIOA_PDDR |= (0 << 4);
-	PORTA_PCR4 = PORT_PCR_IRQC(0x9);		//rising edge
-	PORTA_ISFR = PORT_ISFR_ISF(0x10);		//clear flag
-	NVIC_EnableIRQ(PORTA_IRQn);
+	GPIOA_PDDR = (0 << 4);
+	PORTA_PCR4 |= PORT_PCR_IRQC(0x9);		//rising edge
+	PORTA_PCR4 |= PORT_PCR_ISF_MASK;		//clear flag
 }
 
 void SW2_INIT(){
 	//Configure SW2 to be interrupted on both rising and falling edge
 	SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;		//Enables Port C clock
-	PORTC_PCR6 = PORT_PCR_MUX(1);				//PTC6
-	GPIOC_PDDR |= (0 << 6);
-	PORTC_PCR6 = PORT_PCR_IRQC(0xB);		//rising and falling edge
-	PORTC_ISFR = PORT_ISFR_ISF(0x40);		//clear flag
-	NVIC_EnableIRQ(PORTC_IRQn);
+	PORTC_PCR6 |= PORT_PCR_MUX(1);				//PTC6
+	GPIOC_PDDR = (0 << 6);
+	PORTC_PCR6 |= PORT_PCR_IRQC(0xB);		//rising and falling edge
+	PORTC_PCR6 |= PORT_PCR_ISF_MASK;		//clear flag
 }
  
 void ADC1_INIT(void) {
@@ -108,7 +105,7 @@ void DAC0_INIT(void) {
     DAC0_C1 = 0;
 }
  
-int main(void) {
+int dsafds_main(void) {
     int i; char str[100];
    
     // Initialize UART

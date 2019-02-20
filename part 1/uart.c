@@ -7,6 +7,7 @@
 
 #include "MK64F12.h"
 #include <string.h>
+#include <stdio.h>
 #define BAUD_RATE 9600      //default baud rate 
 #define SYS_CLOCK 20485760 //default system clock (see DEFAULT_SYSTEM_CLOCK  in system_MK64F12.c)
 
@@ -84,6 +85,12 @@ void put(char *ptr_str){
 	{
 		uart_putchar(*ptr_str++);
 	}
+}
+
+void putnumU(int i){
+	char str[500];
+	sprintf(str, "%d", i);
+	put(str);
 }
 
 void LED_init()
