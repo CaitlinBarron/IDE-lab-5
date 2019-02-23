@@ -1,0 +1,65 @@
+Dependencies for Project 'part1', Target 'Target 1': (DO NOT MODIFY !)
+F (.\main.c)(0x5C6DD5F6)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DMK64FX512xxx12-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (MK64F12.h)(0x5C64B612)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588C2C04)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm4.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h)(0x5B1FE754)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5B58EC86)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include\system_MK64F12.h)(0x5404B3D0)
+I (uart.h)(0x5C6DC1B6)
+I (isr.h)(0x5C6DB294)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588C2C04)
+F (.\uart.c)(0x5C6DC028)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DMK64FX512xxx12-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
+I (MK64F12.h)(0x5C64B612)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588C2C04)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm4.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h)(0x5B1FE754)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5B58EC86)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include\system_MK64F12.h)(0x5404B3D0)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588C2C04)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588C2C04)
+F (.\MK64F12.h)(0x5C64B612)()
+F (.\uart.h)(0x5C6DC1B6)()
+F (.\camera_FTM_blank.c)(0x5C64B612)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DMK64FX512xxx12-o .\objects\camera_ftm_blank.o --omf_browse .\objects\camera_ftm_blank.crf --depend .\objects\camera_ftm_blank.d)
+I (MK64F12.h)(0x5C64B612)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588C2C04)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm4.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h)(0x5B1FE754)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5B58EC86)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include\system_MK64F12.h)(0x5404B3D0)
+I (uart.h)(0x5C6DC1B6)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588C2C04)
+F (.\main_A2D_template.c)(0x5C71C85A)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DMK64FX512xxx12-o .\objects\main_a2d_template.o --omf_browse .\objects\main_a2d_template.crf --depend .\objects\main_a2d_template.d)
+I (uart.h)(0x5C6DC1B6)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588C2C04)
+I (MK64F12.h)(0x5C64B612)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm4.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h)(0x5B1FE754)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5B58EC86)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include\system_MK64F12.h)(0x5404B3D0)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588C2C04)
+F (.\isr.h)(0x5C6DB294)()
+F (.\isr.c)(0x5C6DCDF4)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DMK64FX512xxx12-o .\objects\isr.o --omf_browse .\objects\isr.crf --depend .\objects\isr.d)
+I (isr.h)(0x5C6DB294)
+I (MK64F12.h)(0x5C64B612)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588C2C04)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm4.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h)(0x5B1FE754)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5B58EC86)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include\system_MK64F12.h)(0x5404B3D0)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588C2C04)
+I (uart.h)(0x5C6DC1B6)
+F (RTE\Device\MK64FX512xxx12\startup_MK64F12.s)(0x5C64B612)(--cpu Cortex-M4.fp -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "MK64FX512xxx12 SETA 1"--list .\listings\startup_mk64f12.lst --xref -o .\objects\startup_mk64f12.o --depend .\objects\startup_mk64f12.d)
+F (RTE\Device\MK64FX512xxx12\system_MK64F12.c)(0x5C64B612)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DMK64FX512xxx12-o .\objects\system_mk64f12.o --omf_browse .\objects\system_mk64f12.crf --depend .\objects\system_mk64f12.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588C2C04)
+I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include\MK64F12.h)(0x585C24CA)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\core_cm4.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_version.h)(0x5B1FE754)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5B58EC86)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5B621944)
+I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_K60_DFP\1.5.0\Device\Include\system_MK64F12.h)(0x5404B3D0)
