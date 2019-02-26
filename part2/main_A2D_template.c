@@ -122,12 +122,20 @@ int main(void) {
     // Start the PDB (ADC Conversions)
     PDB0_SC |= PDB_SC_SWTRIG_MASK;
  
-    for(;;) {
-		sprintf(str,"\n Decimal: %d Hexadecimal: %x \n\r",ADC1_RA,ADC1_RA);
-		put(str);
-		for( i=0; i < 5000000; ++i ){
-                       
-        }
+    for(;;) 
+		{
+			//temp
+			//int c = (((ADC1_RA* 3.3)/65535)-.5)/.01;
+			//int f = (c * 1.8) + 32;
+			//sprintf(str,"\n Celcius: %d Fahrenheit: %d \n\r",c,f);
+			
+			//photo sensor
+			sprintf(str,"\n Decimal: %d Hexadecimal: %x \n\r",ADC1_RA,ADC1_RA);
+			put(str);
+			for( i=0; i < 5000000; ++i )
+			{
+												 
+			}
     }
  
     return 0;

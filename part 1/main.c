@@ -110,26 +110,6 @@ void initGPIO(void){
 	SW3_INIT();
 	SW2_INIT();
 
-
-	//initialize clocks for each different port used.
-
-
-	//Configure Port Control Register for Inputs with pull enable and pull up resistor
-
-	// Configure mux for Outputs
-
-
-	// Switch the GPIO pins to output mode (Red and Blue LEDs)
-
-
-	// Turn off the LEDs
-
-	// Set the push buttons as an input
-
-
-	// interrupt configuration for SW3(Rising Edge) and SW2 (Either)
-	
-
 	return;
 }
 
