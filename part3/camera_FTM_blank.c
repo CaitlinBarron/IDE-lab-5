@@ -100,7 +100,7 @@ int main(void)
 /* ADC0 Conversion Complete ISR  */
 void ADC0_IRQHandler(void) {
 	// Reading ADC0_RA clears the conversion complete flag
-	ADC0_RA;
+	ADC0VAL = ADC0_RA;
 	
 }
 
@@ -165,7 +165,7 @@ void PIT0_IRQHandler(void){
 	PIT_TFLG0 = PIT_TFLG_TIF_MASK;
 	
 	// Setting mod resets the FTM counter
-	FTM2_MOD = 500;
+	FTM2_MOD = FTM_MOD_MOD_MASK & (DEFAULT_SYSTEM_CLOCK / 100000);
 	
 	// Enable FTM2 interrupts (camera)
 	FTM2_SC |= FTM_SC_TOIE_MASK;
@@ -193,10 +193,10 @@ void init_FTM2(){
 	FTM2_CNTIN = 0;
 	
 	// Set the period (~10us)
-	FTM2_MOD = (0xFFFF) & (DEFAULT_SYSTEM_CLOCK / 100000);
+	FTM2_MOD = FTM_MOD_MOD_MASK & (DEFAULT_SYSTEM_CLOCK / 100000);
 	
 	// 50% duty
-	FTM2_C0V = FTM_CnV_VAL(0x8000);
+	FTM2_C0V = FTM_CnV_VAL((DEFAULT_SYSTEM_CLOCK / 100000)/2);
 	
 	// Set edge-aligned mode
 	FTM2_QDCTRL  &= ~(FTM_QDCTRL_QUADEN_MASK);
@@ -234,11 +234,11 @@ void init_FTM2(){
 void init_PIT(void){
 	// Setup periodic interrupt timer (PIT)
 	
-	//Enable the module
-	PIT_MCR &= ~(PIT_MCR_MDIS_MASK);
-	
 	// Enable clock for timers
 	SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
+	
+	//Enable the module
+	PIT_MCR &= ~(PIT_MCR_MDIS_MASK);
 	
 	// Enable timers to continue in debug mode
 	PIT_MCR &= ~(PIT_MCR_FRZ_MASK);// In case you need to debug
@@ -287,8 +287,8 @@ void init_GPIO(void){
 void init_ADC0(void) {
     unsigned int calib;
     // Turn on ADC0
-    // Turn on ADC1 clock
-		SIM_SCGC3 |= SIM_SCGC3_ADC1_MASK;
+    // Turn on ADC0 clock
+		SIM_SCGC6 |= SIM_SCGC6_ADC0_MASK;
 	
 	// Single ended 16 bit conversion, no clock divider
 
