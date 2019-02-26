@@ -55,7 +55,7 @@ uint16_t line[128];
 
 // These variables are for streaming the camera
 //	 data over UART
-int debugcamdata = 0;
+int debugcamdata = 1;
 int capcnt = 0;
 char str[100];
 
@@ -100,7 +100,7 @@ int CAM_main(void)
 /* ADC0 Conversion Complete ISR  */
 void ADC0_IRQHandler(void) {
 	// Reading ADC0_RA clears the conversion complete flag
-	//INSERT CODE HERE
+	ADC0_RA;
 	
 }
 
@@ -114,10 +114,10 @@ void ADC0_IRQHandler(void) {
 */
 void FTM2_IRQHandler(void){ //For FTM timer
 	// Clear interrupt
-  	//INSERT CODE HERE
+  FTM2_SC &= ~(FTM_SC_TOF_MASK);
 	
 	// Toggle clk
-	//INSERT CODE HERE
+	GPIOB_PSOR |= (1 << 9);//this turns it on, might actually want to toggle
 	
 	// Line capture logic
 	if ((pixcnt >= 2) && (pixcnt < 256)) {
@@ -142,7 +142,7 @@ void FTM2_IRQHandler(void){ //For FTM timer
 		pixcnt = -2; // reset counter
 		// Disable FTM2 interrupts (until PIT0 overflows
 		//   again and triggers another line capture)
-		//INSERT CODE HERE
+		FTM2_SC &= ~(FTM_SC_TOIE_MASK);
 	
 	}
 	return;
@@ -162,13 +162,13 @@ void PIT0_IRQHandler(void){
 		capcnt += 1;
 	}
 	// Clear interrupt
-	//INSERT CODE HERE
+	PIT_TFLG0 = PIT_TFLG_TIF_MASK;
 	
 	// Setting mod resets the FTM counter
-	//INSERT CODE HERE
+	FTM2_MOD = 500;
 	
 	// Enable FTM2 interrupts (camera)
-	//INSERT CODE HERE
+	FTM2_SC |= FTM_SC_TOIE_MASK;
 	
 	return;
 }
@@ -182,27 +182,29 @@ void init_FTM2(){
 	
 	//turn off FTM Mode to  write protection;
 	FTM2_MODE |= FTM_MODE_WPDIS_MASK;
-
-	//divide the input clock down by 128,
-	FTM2_SC |= (FTM_SC_PS_MASK & 7);
+	
+		// Set output to '1' on init
+	FTM2_OUTINIT |= FTM_OUTINIT_CH0OI_MASK;
 
 	//reset the counter to zero
 	FTM2_CNT = 0;
-	
-	// Set output to '1' on init
-	FTM2_OUTINIT |= FTM_OUTINIT_CH0OI_MASK;
 
 	// Set the Counter Initial Value to 0
 	FTM2_CNTIN = 0;
 	
 	// Set the period (~10us)
-	FTM2_MOD = 2;
+	FTM2_MOD = (0xFFFF) & (DEFAULT_SYSTEM_CLOCK / 100000);
 	
 	// 50% duty
-	//INSERT CODE HERE
+	FTM2_C0V = FTM_CnV_VAL_MASK & 0x8000;
 	
 	// Set edge-aligned mode
-	FTM2_C0SC |= FTM_CnSC_MSB_MASK; 
+	FTM2_QDCTRL  &= ~(FTM_QDCTRL_QUADEN_MASK);
+	FTM2_COMBINE &= ~(FTM_COMBINE_DECAPEN0_MASK);
+	FTM2_COMBINE &= ~(FTM_COMBINE_COMBINE0_MASK);
+	FTM2_COMBINE &= ~(FTM_SC_CPWMS_MASK);
+	
+	FTM2_C0SC |= FTM_CnSC_MSB_MASK;
 	
 	// Enable High-true pulses
 	// ELSB = 1, ELSA = 0
@@ -211,20 +213,17 @@ void init_FTM2(){
 	
 	
 	// Enable hardware trigger from FTM2
-	//INSERT CODE HERE
-	
-	//IF IT BREAKS, CHECK THESE TWO
-	FTM2_EXTTRIG |= FTM_EXTTRIG_CH0TRIG_MASK; // enables channel 0
-	FTM2_SYNCONF |= FTM_SYNCONF_HWTRIGMODE_MASK;//enables hardware for sync
-	
+	FTM2_EXTTRIG |= FTM_EXTTRIG_INITTRIGEN_MASK;
+
 	// Don't enable interrupts yet (disable)
-	//INSERT CODE HERE
+	FTM2_SC &= ~(FTM_SC_TOIE_MASK);
 	
 	// No prescalar, system clock
-	//INSERT CODE HERE
+	FTM2_SC &= FTM_SC_PS_MASK;//no prescaler
+	FTM2_SC |= FTM_SC_CLKS(1);//system clock
 	
 	// Set up interrupt
-	//INSERT CODE HERE
+	NVIC_EnableIRQ(FTM2_IRQn);
 	
 	return;
 }
@@ -235,27 +234,30 @@ void init_FTM2(){
 void init_PIT(void){
 	// Setup periodic interrupt timer (PIT)
 	
+	//Enable the module
+	PIT_MCR &= ~(PIT_MCR_MDIS_MASK);
+	
 	// Enable clock for timers
-	//INSERT CODE HERE
+	SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
 	
 	// Enable timers to continue in debug mode
-	//INSERT CODE HERE // In case you need to debug
+	PIT_MCR &= ~(PIT_MCR_FRZ_MASK);// In case you need to debug
 	
 	// PIT clock frequency is the system clock
 	// Load the value that the timer will count down from
-	//INSERT CODE HERE
+	PIT_LDVAL0 = DEFAULT_SYSTEM_CLOCK * INTEGRATION_TIME;
 	
 	// Enable timer interrupts
-	//INSERT CODE HERE
+	PIT_TCTRL0 |= PIT_TCTRL_TIE_MASK;
 	
 	// Enable the timer
-	//INSERT CODE HERE
+	PIT_TCTRL0 |= PIT_TCTRL_TEN_MASK;
 
 	// Clear interrupt flag
-	//INSERT CODE HERE
+	PIT_TFLG0 &= ~(PIT_TFLG_TIF_MASK);
 
 	// Enable PIT interrupt in the interrupt controller
-	//INSERT CODE HERE
+	NVIC_EnableIRQ(PIT0_IRQn);
 	return;
 }
 
@@ -267,7 +269,17 @@ void init_PIT(void){
 */
 void init_GPIO(void){
 	// Enable LED and GPIO so we can see results
-	//INSERT CODE HERE
+	SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;		//Enables Port B mask
+	
+	PORTB_PCR22 = PORT_PCR_MUX(1);				//Enables GPIO mode for PTB22
+	PORTB_PCR9  = PORT_PCR_MUX(1);
+	PORTB_PCR23 = PORT_PCR_MUX(1);
+	
+	//Set GPIO to output or input mode
+	GPIOB_PDDR = (1 << 22); //RED LED TO OUTPUT
+	GPIOB_PDDR = (1 << 9);// CLK TO OUTPUT
+	GPIOB_PDDR = (1 << 23);//SI TO OUTPUT
+
 	return;
 }
 
@@ -275,10 +287,14 @@ void init_GPIO(void){
 void init_ADC0(void) {
     unsigned int calib;
     // Turn on ADC0
-    //INSERT CODE HERE
+    // Turn on ADC1 clock
+		SIM_SCGC3 |= SIM_SCGC3_ADC1_MASK;
 	
 	// Single ended 16 bit conversion, no clock divider
-	//INSERT CODE HERE
+
+	
+	ADC0_CFG1 &= ~(ADC_CFG1_ADIV_MASK);//no clock divider
+	ADC0_CFG1 |= ADC_CFG1_MODE(3);//16 bit
     
     // Do ADC Calibration for Singled Ended ADC. Do not touch.
     ADC0_SC3 = ADC_SC3_CAL_MASK;
@@ -289,16 +305,17 @@ void init_ADC0(void) {
     ADC0_PG = calib;
     
     // Select hardware trigger.
-    //INSERT CODE HERE
+    ADC0_SC2 |= ADC_SC2_ADTRG_MASK;//hardware trigger
     
     // Set to single ended mode	
-	//INSERT CODE HERE
+		ADC0_SC1A &= ~(ADC_SC1_DIFF_MASK);//Single ended
+		ADC0_SC1A &= ~(ADC_SC1_ADCH_MASK);//DADP0
 	
 	// Set up FTM2 trigger on ADC0
-	//INSERT CODE HERE // FTM2 select
-	//INSERT CODE HERE // Alternative trigger en.
-	//INSERT CODE HERE // Pretrigger A
+	SIM_SOPT7 |= SIM_SOPT7_ADC0TRGSEL(10); // FTM2 select
+	SIM_SOPT7 |= SIM_SOPT7_ADC0ALTTRGEN_MASK; // Alternative trigger en.
+	SIM_SOPT7 &= SIM_SOPT7_ADC0PRETRGSEL_MASK; // Pretrigger A
 	
 	// Enable NVIC interrupt
-    //INSERT CODE HERE
+  NVIC_EnableIRQ(ADC0_IRQn);
 }
