@@ -62,7 +62,7 @@ char str[100];
 // ADC0VAL holds the current ADC value
 uint16_t ADC0VAL;
 
-int CAM_main(void)
+int main(void)
 {
 	int i;
 	
@@ -196,7 +196,7 @@ void init_FTM2(){
 	FTM2_MOD = (0xFFFF) & (DEFAULT_SYSTEM_CLOCK / 100000);
 	
 	// 50% duty
-	FTM2_C0V = FTM_CnV_VAL_MASK & 0x8000;
+	FTM2_C0V = FTM_CnV_VAL(0x8000);
 	
 	// Set edge-aligned mode
 	FTM2_QDCTRL  &= ~(FTM_QDCTRL_QUADEN_MASK);
