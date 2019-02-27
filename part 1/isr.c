@@ -40,14 +40,17 @@ void PDB0_IRQHandler(void)
 	//Clear interupt in PDB0_SC
 	PDB0_SC &= ~PDB_SC_PDBIF_MASK;
 
-	
+	//Check if the blinking is toggled or not
 	if(SW3_Pressed){
+		//Blinking is toggled, check if LED is currently on
 		if(redON){
+			//LED is on, turn it off
 			Off_LED();
 			redON = 0;
 		}
 		else{
-			Off_LED();
+			//LED is off, turn it on
+			Off_LED();//for safety, should not be needed
 			Red_LED();
 			redON = 1;
 		}
@@ -73,12 +76,12 @@ void PORTA_IRQHandler(void)
 { //For switch 3
 	PORTA_PCR4 |= PORT_PCR_ISF_MASK;		//clear flag
 
-	if(SW3_Pressed){
-		SW3_Pressed = 0;
-		Off_LED();
+	if(SW3_Pressed){//Toggle blinking off
+		SW3_Pressed = 0;//clear global signal flag
+		Off_LED();//Turn all LEDs off
 	}
-	else{
-		SW3_Pressed = 1;
+	else{//Toggle blinking on
+		SW3_Pressed = 1;//Set global signal flag
 
 	}
 	
@@ -89,15 +92,18 @@ void PORTC_IRQHandler(void)
 { //For switch 2
 	PORTC_PCR6 |= PORT_PCR_ISF_MASK;		//clear flag
 	
-	if(!(GPIOC_PDIR & ( 1 << 6))){
-		SW2_Pressed = 1;
-		FTM0_CNT = 0x00;
-		timerCount = 0;
-		Blue_LED();
+	//Button pressed/held
+	if(!(GPIOC_PDIR & ( 1 << 6))){//checks if SW2 is pressed
+		SW2_Pressed = 1;//set local variable
+		FTM0_CNT = 0x00;//reset FTM counter
+		timerCount = 0;//reset counter local variable
+		Blue_LED();//turn on blue led
 	}
-	else{
-		SW2_Pressed = 0;
-		Off_LED();
+	else{//Buttom released
+		SW2_Pressed = 0;//clear local variable
+		Off_LED();//turn off the led
+		
+		//print how long the button was held for
 		put("Button held for ");
 		putnumU(timerCount);
 		put(" ms\n\r");

@@ -112,9 +112,8 @@ void DAC0_INIT(void) {
 int main(void) {
     int i; char str[100];
    
-    // Initialize UART
-    uart_init();
-               
+    // Initialize modules
+    uart_init();       
     DAC0_INIT();
     ADC1_INIT();
     PDB_INIT();
@@ -125,10 +124,35 @@ int main(void) {
     for(;;) 
 		{
 			//temp
-			//int c = (((ADC1_RA* 3.3)/65535)-.5)/.01;
-			//int f = (c * 1.8) + 32;
-			//sprintf(str,"\n Celcius: %d Fahrenheit: %d \n\r",c,f);
-			
+			int c = (((ADC1_RA* 3.3)/65535)-.5)/.01;
+			int f = (c * 1.8) + 32;
+			sprintf(str,"\n Celcius: %d Fahrenheit: %d \n\r",c,f);
+
+			put(str);
+			for( i=0; i < 5000000; ++i )
+			{
+												 
+			}
+    }
+ 
+    return 0;
+}
+
+
+int photo_main(void) {
+    int i; char str[100];
+   
+    // Initialize modules
+    uart_init();       
+    DAC0_INIT();
+    ADC1_INIT();
+    PDB_INIT();
+ 
+    // Start the PDB (ADC Conversions)
+    PDB0_SC |= PDB_SC_SWTRIG_MASK;
+ 
+    for(;;) 
+		{
 			//photo sensor
 			sprintf(str,"\n Decimal: %d Hexadecimal: %x \n\r",ADC1_RA,ADC1_RA);
 			put(str);
@@ -140,5 +164,4 @@ int main(void) {
  
     return 0;
 }
-
 

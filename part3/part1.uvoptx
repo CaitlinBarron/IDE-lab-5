@@ -150,25 +150,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>97</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>2152</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\main_A2D_template.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\part1\main_A2D_template.c\97</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
           <LineNumber>74</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2626</Address>
+          <Address>2390</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -180,36 +164,36 @@
           <Expression>\\part1\isr.c\74</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>118</LineNumber>
+          <LineNumber>117</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3026</Address>
+          <Address>2024</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\main_A2D_template.c</Filename>
+          <Filename>.\camera_FTM_blank.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\part1\main_A2D_template.c\118</Expression>
+          <Expression>\\part1\camera_FTM_blank.c\117</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
+          <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>125</LineNumber>
+          <LineNumber>199</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3048</Address>
+          <Address>3002</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\main_A2D_template.c</Filename>
+          <Filename>.\camera_FTM_blank.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\part1\main_A2D_template.c\125</Expression>
+          <Expression>\\part1\camera_FTM_blank.c\199</Expression>
         </Bp>
       </Breakpoint>
       <Tracepoint>
@@ -258,6 +242,10 @@
         <Entry>
           <Name>System Viewer\ADC1</Name>
           <WinId>35903</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\FTM2</Name>
+          <WinId>35902</WinId>
         </Entry>
         <Entry>
           <Name>System Viewer\PDB0</Name>
