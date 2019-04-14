@@ -11,6 +11,7 @@
 #include "MK64F12.h"
 #include "stdio.h"
 
+
  
 void PDB_INIT(void) {
     //Enable PDB Clock
@@ -92,15 +93,7 @@ void ADC1_INIT(void) {
 		NVIC_EnableIRQ(ADC1_IRQn);
 }
  
-// ADC1 Conversion Complete ISR
-void ADC1_IRQHandler(void) {
-    // Read the result (upper 12-bits). This also clears the Conversion complete flag.
-    unsigned short i = ADC1_RA >> 4;
 
-    //Set DAC output value (12bit)
-    DAC_DATL_DATA0(i);
-		DAC_DATH_DATA1(i);
-}
 
 void DAC0_INIT(void) {
     //enable DAC clock
@@ -117,6 +110,7 @@ int main(void) {
     DAC0_INIT();
     ADC1_INIT();
     PDB_INIT();
+		FTM_INIT();
  
     // Start the PDB (ADC Conversions)
     PDB0_SC |= PDB_SC_SWTRIG_MASK;

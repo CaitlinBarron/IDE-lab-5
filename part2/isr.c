@@ -13,6 +13,10 @@ int SW2_Pressed = 0;
 int SW3_Pressed = 0;
 int redON = 0;
 
+//Lab 8 ADC
+unsigned short PPG[1000];
+unsigned int PPG_CNT = 0;
+
 void Blue_LED()
 {
 	GPIOB_PCOR = (1 << 21);					//Set PTB21 LED to on
@@ -61,9 +65,11 @@ void FTM0_IRQHandler(void)
 	FTM0_CNT = 0;
 	FTM0_SC &= ~FTM_SC_TOF_MASK;
 	
+	//add a millisecond to timerCount
+	timerCount++;
 	
-	if(SW2_Pressed){
-		timerCount++;
+	if(timerCount >= 10000){
+		
 	}
 	
 	return;
@@ -106,4 +112,14 @@ void PORTC_IRQHandler(void)
 	
 	
 	return;
+}
+
+// ADC1 Conversion Complete ISR
+void ADC1_IRQHandler(void) {
+    // Read the result (upper 12-bits). This also clears the Conversion complete flag.
+    PPG[PPG_CNT] = ADC1_RA >> 4;
+		if(PPG_CNT >= 1000){
+			PPG_CNT = 0;
+		}
+
 }
