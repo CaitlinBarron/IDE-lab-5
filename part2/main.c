@@ -133,13 +133,3 @@ void initGPIO(void){
 	return;
 }
 
-void initInterrupts(void){
-	/*Can find these in MK64F12.h*/
-	// Enable NVIC for portA,portC, PDB0,FTM0
-	NVIC_EnableIRQ(PORTA_IRQn);
-	NVIC_EnableIRQ(PORTC_IRQn);
-	NVIC_EnableIRQ(PDB0_IRQn);
-	NVIC_EnableIRQ(FTM0_IRQn);
-
-	return;
-}

@@ -1,5 +1,4 @@
 --cpu=Cortex-M4.fp
-".\objects\main.o"
 ".\objects\uart.o"
 ".\objects\camera_ftm_blank.o"
 ".\objects\main_a2d_template.o"

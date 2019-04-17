@@ -10,6 +10,8 @@
 #include "uart.h"
 #include "MK64F12.h"
 #include "stdio.h"
+#include "isr.h"
+#define DEFAULT_SYSTEM_CLOCK 20485760u /* Default System clock value */
 
 
  
@@ -25,11 +27,35 @@ void PDB_INIT(void) {
 }
 
 void FTM_INIT(void){
-	//Enable the clock for the FTM0 module
-	FTM_SC_CLKS(0x01);
+//Enable clock for FTM module (use FTM0)
+	SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK;
+
+	//turn off FTM Mode to  write protection;
+	FTM0_MODE |= FTM_MODE_WPDIS_MASK;
+
+	//divide the input clock down by 128,
+	FTM0_SC |= (FTM_SC_PS_MASK & 7);
+
+	//reset the counter to zero
+	FTM0_CNT = 0;
 	
-	//Enable the FTM0 IRQ, use NVIC_EnableIRQ macro
-	NVIC_EnableIRQ(FTM0_IRQn);
+	// Set the Counter Initial Value to 0
+	FTM0_CNTIN = 0;
+
+
+	//Set the overflow rate
+	//(Sysclock/128)- clock after prescaler
+	//(Sysclock/128)/1000- slow down by a factor of 1000 to go from
+	//Mhz to Khz, then 1/KHz = msec
+	//Every 1msec, the FTM counter will set the overflow flag (TOF) and
+	FTM0->MOD = (DEFAULT_SYSTEM_CLOCK/(1<<7))/1000;
+
+	//Select the System Clock
+	FTM0_SC |=( 1 << FTM_SC_CLKS_SHIFT);
+
+	//Enable the interrupt mask. Timer overflow Interrupt enable
+	FTM0_SC |= FTM_SC_TOIE_MASK;
+
 }
 
 void SW3_INIT(){
@@ -87,10 +113,7 @@ void ADC1_INIT(void) {
 		ADC1_SC1A &= ~(ADC_SC1_ADCH_MASK); //Flip all the bits!
 		//ADC1_SC1A |= (ADC_SC1_ADCH_MASK & 0x03); //DAP3
 		
- 
- 
-    // Enable NVIC interrupt
-		NVIC_EnableIRQ(ADC1_IRQn);
+		ADC1_SC1A |= (ADC_SC1_AIEN_MASK);
 }
  
 
@@ -101,33 +124,29 @@ void DAC0_INIT(void) {
     DAC0_C0 = DAC_C0_DACEN_MASK | DAC_C0_DACRFS_MASK;
     DAC0_C1 = 0;
 }
- 
+ void initInterrupts(void){
+	/*Can find these in MK64F12.h*/
+	// Enable NVIC for portA,portC, PDB0,FTM0
+	NVIC_EnableIRQ(PORTA_IRQn);
+	NVIC_EnableIRQ(PORTC_IRQn);
+	NVIC_EnableIRQ(PDB0_IRQn);
+	NVIC_EnableIRQ(FTM0_IRQn);
+
+	return;
+}
 int main(void) {
-    int i; char str[100];
    
     // Initialize modules
-    uart_init();       
-    DAC0_INIT();
+    uart_init();  
+		FTM_INIT();	
     ADC1_INIT();
     PDB_INIT();
-		FTM_INIT();
+		initInterrupts();
  
     // Start the PDB (ADC Conversions)
     PDB0_SC |= PDB_SC_SWTRIG_MASK;
  
-    for(;;) 
-		{
-			//temp
-			int c = (((ADC1_RA* 3.3)/65535)-.5)/.01;
-			int f = (c * 1.8) + 32;
-			sprintf(str,"\n Celcius: %d Fahrenheit: %d \n\r",c,f);
-
-			put(str);
-			for( i=0; i < 5000000; ++i )
-			{
-												 
-			}
-    }
+    while(1);
  
     return 0;
 }

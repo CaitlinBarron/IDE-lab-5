@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include "uart.h"
 
+#define PPG_MAX (10000)
+
 //variables global to the IRQ handlers which dictates if timer is enabled &  timer counter
 int timerCount = 0;
 int SW2_Pressed = 0;
@@ -14,8 +16,9 @@ int SW3_Pressed = 0;
 int redON = 0;
 
 //Lab 8 ADC
-unsigned short PPG[1000];
+int PPG[PPG_MAX];
 unsigned int PPG_CNT = 0;
+unsigned int ppg_ready = 0;
 
 void Blue_LED()
 {
@@ -59,17 +62,47 @@ void PDB0_IRQHandler(void)
 	
 	return;
 }
+
+void calculateHeartBeat(){
+	
+	int line[PPG_MAX];
+	int negCount = 0;
+	int posCount = 0;
+	int heartRate = 0;
+	
+	for(int i = 1; i < PPG_MAX - 1; i ++){
+		line[i] = PPG[i+1] - PPG[i-1];
+		if(line[i] > 0){
+			posCount++;
+		}
+		if(line[i] < 0){
+			negCount++;
+			posCount = 0;
+		}
+		if(negCount == 3){
+			heartRate++;
+		}
+		if(posCount >= 3){
+			negCount = 0;
+			posCount = 0;
+		}
+	}
+}
 	
 void FTM0_IRQHandler(void)
 { //For FTM timer
-	FTM0_CNT = 0;
 	FTM0_SC &= ~FTM_SC_TOF_MASK;
 	
 	//add a millisecond to timerCount
 	timerCount++;
+	PPG[PPG_CNT] = ADC1_RA >> 4;
+	if(PPG_CNT >= PPG_MAX){
+		PPG_CNT = 0;
+	}
+	PPG_CNT++;
 	
 	if(timerCount >= 10000){
-		
+		calculateHeartBeat();
 	}
 	
 	return;
@@ -117,9 +150,5 @@ void PORTC_IRQHandler(void)
 // ADC1 Conversion Complete ISR
 void ADC1_IRQHandler(void) {
     // Read the result (upper 12-bits). This also clears the Conversion complete flag.
-    PPG[PPG_CNT] = ADC1_RA >> 4;
-		if(PPG_CNT >= 1000){
-			PPG_CNT = 0;
-		}
 
 }
